@@ -18,7 +18,7 @@ def diagnosis():
 @app.route("/result", methods=["POST"])
 def result():
 
-    company = request.form["company"]
+    company = request.form.get("company", "")
 
     contact = 0
     recruit = 0
@@ -28,26 +28,26 @@ def result():
     answers = {}
 
     # 接点
-    for i in range(1,7):
-        val = int(request.form.get(f"contact{i}",0))
+    for i in range(1, 7):
+        val = int(request.form.get(f"contact{i}", 0))
         contact += val
         answers[f"contact{i}"] = val
 
     # 求人力
-    for i in range(1,7):
-        val = int(request.form.get(f"recruit{i}",0))
+    for i in range(1, 7):
+        val = int(request.form.get(f"recruit{i}", 0))
         recruit += val
         answers[f"recruit{i}"] = val
 
     # 認知
-    for i in range(1,7):
-        val = int(request.form.get(f"recognition{i}",0))
+    for i in range(1, 7):
+        val = int(request.form.get(f"recognition{i}", 0))
         recognition += val
         answers[f"recognition{i}"] = val
 
     # 組織力
-    for i in range(1,7):
-        val = int(request.form.get(f"organization{i}",0))
+    for i in range(1, 7):
+        val = int(request.form.get(f"organization{i}", 0))
         organization += val
         answers[f"organization{i}"] = val
 
@@ -61,20 +61,17 @@ def result():
 
     result_type = min(scores, key=scores.get)
 
-
     comments = {
-        "接点不足型":"求職者との接点が不足しています。",
-        "求人改善型":"求人内容の魅力が不足している可能性があります。",
-        "認知不足型":"会社の認知度が不足しています。",
-        "組織改善型":"組織体制の改善余地があります。"
+        "接点不足型": "求職者との接点が不足しています。",
+        "求人改善型": "求人内容の魅力が不足している可能性があります。",
+        "認知不足型": "会社の認知度が不足しています。",
+        "組織改善型": "組織体制の改善余地があります。"
     }
 
     comment = comments[result_type]
 
-
     # 診断日時
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
 
     data = {
         "診断日時": now,
@@ -89,22 +86,15 @@ def result():
     # 各回答追加
     data.update(answers)
 
-
     file = "diagnosis_results.xlsx"
 
-
     if os.path.exists(file):
-
         df = pd.read_excel(file)
         df = pd.concat([df, pd.DataFrame([data])], ignore_index=True)
-
     else:
-
         df = pd.DataFrame([data])
 
-
     df.to_excel(file, index=False)
-
 
     return render_template(
         "result.html",
@@ -118,7 +108,7 @@ def result():
     )
 
 
-app.run(debug=True)
-
+# 🔥 Render対応（ここが超重要）
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
