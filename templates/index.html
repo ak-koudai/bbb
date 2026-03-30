@@ -4,7 +4,6 @@
 <head>
 
 <title>採用力診断</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -16,6 +15,8 @@ margin:0;
 padding:20px;
 }
 
+/* ===== コンテナ ===== */
+
 .container{
 max-width:600px;
 margin:auto;
@@ -24,6 +25,8 @@ padding:25px;
 border-radius:10px;
 box-shadow:0 0 10px rgba(0,0,0,0.08);
 }
+
+/* ===== ステップ ===== */
 
 .step{
 display:none;
@@ -37,6 +40,8 @@ h2{
 margin-top:0;
 }
 
+/* ===== ラジオ ===== */
+
 .radio label{
 display:block;
 border:1px solid #ddd;
@@ -49,6 +54,8 @@ cursor:pointer;
 .radio input{
 margin-right:10px;
 }
+
+/* ===== 通常ボタン ===== */
 
 button{
 margin-top:25px;
@@ -66,6 +73,8 @@ button:hover{
 background:#1f63c5;
 }
 
+/* ===== プログレス ===== */
+
 .progress{
 width:100%;
 background:#eee;
@@ -81,6 +90,8 @@ width:0%;
 border-radius:10px;
 }
 
+/* ===== 入力 ===== */
+
 input[type="text"]{
 width:100%;
 padding:12px;
@@ -91,6 +102,65 @@ border-radius:6px;
 
 .question{
 margin-top:20px;
+}
+
+/* ===================== */
+/* 🔥 固定ボタン */
+/* ===================== */
+
+.fixed-btn{
+position:fixed;
+z-index:999;
+
+width:90%;
+max-width:420px;
+
+padding:18px 0;
+font-size:18px;
+font-weight:bold;
+
+background:#ff7a2f;
+color:white;
+border:none;
+border-radius:16px;
+
+box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* 中央 */
+
+.center-btn{
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+}
+
+/* 下 */
+
+.bottom-btn{
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+}
+
+/* スマホ */
+
+@media (max-width:600px){
+
+.fixed-btn{
+font-size:16px;
+padding:14px 0;
+width:92%;
+}
+
+.center-btn{
+top:55%;
+}
+
+.bottom-btn{
+bottom:15px;
+}
+
 }
 
 </style>
@@ -107,7 +177,7 @@ margin-top:20px;
 
 <form action="/result" method="post">
 
-<!-- STEP0 会社名 -->
+<!-- STEP0 -->
 
 <div class="step active">
 
@@ -119,11 +189,9 @@ margin-top:20px;
 
 </div>
 
-
-<!-- STEP1 接点 -->
+<!-- STEP1（省略せずそのまま使ってOK） -->
 
 <div class="step">
-
 <h2>STEP1 接点</h2>
 
 <div class="question">
@@ -135,253 +203,31 @@ margin-top:20px;
 </div>
 </div>
 
-<div class="question">
-過去1年で面接を実施しましたか
-<div class="radio">
-<label><input type="radio" name="contact2" value="2">ある</label>
-<label><input type="radio" name="contact2" value="1">一部ある</label>
-<label><input type="radio" name="contact2" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-職場見学を受け入れたことがありますか
-<div class="radio">
-<label><input type="radio" name="contact3" value="2">ある</label>
-<label><input type="radio" name="contact3" value="1">一部ある</label>
-<label><input type="radio" name="contact3" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-社員紹介で採用したことがありますか
-<div class="radio">
-<label><input type="radio" name="contact4" value="2">ある</label>
-<label><input type="radio" name="contact4" value="1">一部ある</label>
-<label><input type="radio" name="contact4" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-採用イベントに参加したことがありますか
-<div class="radio">
-<label><input type="radio" name="contact5" value="2">ある</label>
-<label><input type="radio" name="contact5" value="1">一部ある</label>
-<label><input type="radio" name="contact5" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-求人問い合わせがありますか
-<div class="radio">
-<label><input type="radio" name="contact6" value="2">ある</label>
-<label><input type="radio" name="contact6" value="1">一部ある</label>
-<label><input type="radio" name="contact6" value="0">ない</label>
-</div>
-</div>
-
 <button type="button" onclick="next()">次へ</button>
 
 </div>
 
-
-<!-- STEP2 求人力 -->
-
-<div class="step">
-
-<h2>STEP2 求人力</h2>
-
-<div class="question">
-求人に職場写真がありますか
-<div class="radio">
-<label><input type="radio" name="recruit1" value="2">ある</label>
-<label><input type="radio" name="recruit1" value="1">一部ある</label>
-<label><input type="radio" name="recruit1" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-仕事内容を具体的に書いていますか
-<div class="radio">
-<label><input type="radio" name="recruit2" value="2">ある</label>
-<label><input type="radio" name="recruit2" value="1">一部ある</label>
-<label><input type="radio" name="recruit2" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-給与条件を明確にしていますか
-<div class="radio">
-<label><input type="radio" name="recruit3" value="2">ある</label>
-<label><input type="radio" name="recruit3" value="1">一部ある</label>
-<label><input type="radio" name="recruit3" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-1日の流れを書いていますか
-<div class="radio">
-<label><input type="radio" name="recruit4" value="2">ある</label>
-<label><input type="radio" name="recruit4" value="1">一部ある</label>
-<label><input type="radio" name="recruit4" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-会社雰囲気の写真がありますか
-<div class="radio">
-<label><input type="radio" name="recruit5" value="2">ある</label>
-<label><input type="radio" name="recruit5" value="1">一部ある</label>
-<label><input type="radio" name="recruit5" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-求人情報を更新していますか
-<div class="radio">
-<label><input type="radio" name="recruit6" value="2">ある</label>
-<label><input type="radio" name="recruit6" value="1">一部ある</label>
-<label><input type="radio" name="recruit6" value="0">ない</label>
-</div>
-</div>
-
-<button type="button" onclick="next()">次へ</button>
-
-</div>
-
-
-<!-- STEP3 認知 -->
-
-<div class="step">
-
-<h2>STEP3 認知</h2>
-
-<div class="question">
-ホームページがありますか
-<div class="radio">
-<label><input type="radio" name="recognition1" value="2">ある</label>
-<label><input type="radio" name="recognition1" value="1">一部ある</label>
-<label><input type="radio" name="recognition1" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-SNSを運用していますか
-<div class="radio">
-<label><input type="radio" name="recognition2" value="2">ある</label>
-<label><input type="radio" name="recognition2" value="1">一部ある</label>
-<label><input type="radio" name="recognition2" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-Googleマップ掲載ありますか
-<div class="radio">
-<label><input type="radio" name="recognition3" value="2">ある</label>
-<label><input type="radio" name="recognition3" value="1">一部ある</label>
-<label><input type="radio" name="recognition3" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-求人媒体掲載していますか
-<div class="radio">
-<label><input type="radio" name="recognition4" value="2">ある</label>
-<label><input type="radio" name="recognition4" value="1">一部ある</label>
-<label><input type="radio" name="recognition4" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-外観で何の会社かわかりますか
-<div class="radio">
-<label><input type="radio" name="recognition5" value="2">ある</label>
-<label><input type="radio" name="recognition5" value="1">一部ある</label>
-<label><input type="radio" name="recognition5" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-会社名検索で出てきますか
-<div class="radio">
-<label><input type="radio" name="recognition6" value="2">ある</label>
-<label><input type="radio" name="recognition6" value="1">一部ある</label>
-<label><input type="radio" name="recognition6" value="0">ない</label>
-</div>
-</div>
-
-<button type="button" onclick="next()">次へ</button>
-
-</div>
-
-
-<!-- STEP4 組織力 -->
-
-<div class="step">
-
-<h2>STEP4 組織力</h2>
-
-<div class="question">
-教育担当はいますか
-<div class="radio">
-<label><input type="radio" name="organization1" value="2">ある</label>
-<label><input type="radio" name="organization1" value="1">一部ある</label>
-<label><input type="radio" name="organization1" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-研修制度がありますか
-<div class="radio">
-<label><input type="radio" name="organization2" value="2">ある</label>
-<label><input type="radio" name="organization2" value="1">一部ある</label>
-<label><input type="radio" name="organization2" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-定期面談がありますか
-<div class="radio">
-<label><input type="radio" name="organization3" value="2">ある</label>
-<label><input type="radio" name="organization3" value="1">一部ある</label>
-<label><input type="radio" name="organization3" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-社員紹介がありますか
-<div class="radio">
-<label><input type="radio" name="organization4" value="2">ある</label>
-<label><input type="radio" name="organization4" value="1">一部ある</label>
-<label><input type="radio" name="organization4" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-平均勤続3年以上ですか
-<div class="radio">
-<label><input type="radio" name="organization5" value="2">ある</label>
-<label><input type="radio" name="organization5" value="1">一部ある</label>
-<label><input type="radio" name="organization5" value="0">ない</label>
-</div>
-</div>
-
-<div class="question">
-社内コミュニケーション良いですか
-<div class="radio">
-<label><input type="radio" name="organization6" value="2">ある</label>
-<label><input type="radio" name="organization6" value="1">一部ある</label>
-<label><input type="radio" name="organization6" value="0">ない</label>
-</div>
-</div>
-
-<button type="submit">診断結果を見る</button>
-
-</div>
+<!-- 👉 他STEPはそのまま流用OK -->
 
 </form>
 
 </div>
+
+<!-- ===================== -->
+<!-- 🔥 固定ボタン -->
+<!-- ===================== -->
+
+<form action="/diagnosis">
+<button class="fixed-btn center-btn">
+無料で診断する
+</button>
+</form>
+
+<form action="/diagnosis">
+<button class="fixed-btn bottom-btn">
+診断スタート
+</button>
+</form>
 
 <script>
 
