@@ -86,15 +86,18 @@ def result():
     # 各回答追加
     data.update(answers)
 
-    file = "diagnosis_results.xlsx"
+   file = "diagnosis_results.csv"
 
-    if os.path.exists(file):
-        df = pd.read_excel(file)
-        df = pd.concat([df, pd.DataFrame([data])], ignore_index=True)
-    else:
-        df = pd.DataFrame([data])
+if os.path.exists(file):
 
-    df.to_excel(file, index=False)
+    df = pd.read_csv(file)
+    df = pd.concat([df, pd.DataFrame([data])], ignore_index=True)
+
+else:
+
+    df = pd.DataFrame([data])
+
+df.to_csv(file, index=False, encoding="utf-8-sig")
 
     return render_template(
         "result.html",
