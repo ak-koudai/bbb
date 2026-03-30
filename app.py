@@ -51,7 +51,7 @@ def result():
         organization += val
         answers[f"organization{i}"] = val
 
-
+    # スコア判定
     scores = {
         "接点不足型": contact,
         "求人改善型": recruit,
@@ -73,6 +73,7 @@ def result():
     # 診断日時
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+    # 保存データ
     data = {
         "診断日時": now,
         "会社名": company,
@@ -86,18 +87,21 @@ def result():
     # 各回答追加
     data.update(answers)
 
-   file = "diagnosis_results.csv"
+    # ======================
+    # 🔥 CSV保存処理
+    # ======================
 
-if os.path.exists(file):
+    file = "diagnosis_results.csv"
 
-    df = pd.read_csv(file)
-    df = pd.concat([df, pd.DataFrame([data])], ignore_index=True)
+    if os.path.exists(file):
+        df = pd.read_csv(file)
+        df = pd.concat([df, pd.DataFrame([data])], ignore_index=True)
+    else:
+        df = pd.DataFrame([data])
 
-else:
+    df.to_csv(file, index=False, encoding="utf-8-sig")
 
-    df = pd.DataFrame([data])
-
-df.to_csv(file, index=False, encoding="utf-8-sig")
+    # ======================
 
     return render_template(
         "result.html",
@@ -111,7 +115,7 @@ df.to_csv(file, index=False, encoding="utf-8-sig")
     )
 
 
-# 🔥 Render対応（ここが超重要）
+# Render対応
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
